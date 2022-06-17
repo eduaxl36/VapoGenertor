@@ -11,25 +11,27 @@ import java.time.LocalDate;
  * @author Eduardo.Fernando
  */
 public class Praca {
-    
-    
+
     private LocalDate Data;
-   
+
+    private int Praca;
+    
     private int Emissora;
-   
+
     private String Duracao;
-    
+
     private float ValorPontoPraca;
-        
+
     private float ValorInstar;
-    
+
     private float Diferenca;
 
     public Praca() {
     }
 
-    public Praca(LocalDate Data, int Emissora, String Duracao, float ValorPontoPraca, float ValorInstar, float Diferenca) {
+    public Praca(LocalDate Data, int Praca, int Emissora, String Duracao, float ValorPontoPraca, float ValorInstar, float Diferenca) {
         this.Data = Data;
+        this.Praca = Praca;
         this.Emissora = Emissora;
         this.Duracao = Duracao;
         this.ValorPontoPraca = ValorPontoPraca;
@@ -43,6 +45,14 @@ public class Praca {
 
     public void setData(LocalDate Data) {
         this.Data = Data;
+    }
+
+    public int getPraca() {
+        return Praca;
+    }
+
+    public void setPraca(int Praca) {
+        this.Praca = Praca;
     }
 
     public int getEmissora() {
@@ -87,13 +97,12 @@ public class Praca {
 
     @Override
     public String toString() {
-        return "Praca{" + "Data=" + Data + ", Emissora=" + Emissora + ", Duracao=" + Duracao + ", ValorPontoPraca=" + ValorPontoPraca + ", ValorInstar=" + ValorInstar + ", Diferenca=" + Diferenca + '}';
+        return "Praca{" + "Data=" + Data + ", Praca=" + Praca + ", Emissora=" + Emissora + ", Duracao=" + Duracao + ", ValorPontoPraca=" + ValorPontoPraca + ", ValorInstar=" + ValorInstar + ", Diferenca=" + Diferenca + '}';
     }
 
-   
     
     
     
     
-    
+
 }

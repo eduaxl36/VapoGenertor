@@ -14,7 +14,7 @@ public class DistritoFederal {
 //    private int TvBand;
 //    private int TvBrasil;
 //    private int Globo;
-//    private int TvBrasilia;
+//    private int rede tv;
 //    private int RecordTv;
 //    private int Sbt;
 //    private int TotalLigadosEspecial;

@@ -18,7 +18,7 @@ public class PortoAlegre {
 //    private int TvBand;
 //    private int Tve; //tv brasil
 //    private int Rbs; //globo
-//    private int Pampa; 
+//    private int redetv; 
 //    private int RecordTv;
 //    private int Sbt;
 //    private int TotalLigadosEspecial;

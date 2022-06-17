@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  * @author Eduardo.Fernando
  */
-public class BelemDao {
+public class PracaDao {
 
     private LocalDate Data;
 
@@ -35,6 +35,44 @@ public class BelemDao {
     private File ArquivoPontoPraca;
 
     private File ArquivoInstar;
+    
+    private int Praca;
+    
+    private int Emissora;
+
+    public PracaDao(LocalDate Data, int PosicaoEmissoraPontoPraca, int PosicaoEmissoraInstar, File ArquivoPontoPraca, File ArquivoInstar, int Praca, int Emissora) {
+        this.Data = Data;
+        this.PosicaoEmissoraPontoPraca = PosicaoEmissoraPontoPraca;
+        this.PosicaoEmissoraInstar = PosicaoEmissoraInstar;
+        this.ArquivoPontoPraca = ArquivoPontoPraca;
+        this.ArquivoInstar = ArquivoInstar;
+        this.Praca = Praca;
+        this.Emissora = Emissora;
+    }
+    
+
+    
+    
+
+    public String[] RetornoPontoPracaMenos2(String[] Valores) {
+
+        List<String> tempVal = new LinkedList();
+
+        for (int i = 0; i < Valores.length; i++) {
+
+            if (i >= 2) {
+
+                tempVal.add(Valores[i]);
+
+            }
+
+        }
+
+        String[] Ret = tempVal.toArray(new String[tempVal.size()]);
+
+        return Ret;
+
+    }
 
     public String FormatarValoresHora(String Periodo) {
 
@@ -43,8 +81,7 @@ public class BelemDao {
                 || Periodo.contains("02:")
                 || Periodo.contains("03:")
                 || Periodo.contains("04:")
-                || Periodo.contains("05:")
-                || Periodo.contains("00:")) {
+                || Periodo.contains("05:")) {
 
             Periodo = "1." + Periodo;
 
@@ -72,14 +109,11 @@ public class BelemDao {
 
     }
 
-//    Multimap<String, MyObj> multimap = 
-//      MultimapBuilder.treeKeys().linkedListValues().build();
-//  
     public List<String> obterAudienciaInstar() throws FileNotFoundException, IOException, Exception {
 
         List<String> Audiencias = new LinkedList();
 
-        BufferedReader bf = new BufferedReader(new FileReader(new File("c:/teste/GSP (30052022).txt")));
+        BufferedReader bf = new BufferedReader(new FileReader(this.ArquivoInstar));
 
         String linha = bf.readLine();
 
@@ -94,19 +128,14 @@ public class BelemDao {
             if (contador > 0) {
 
                 String[] Valores = linha.split(";");
-                
-                if(Valores.length>2){
-          
-                    
-                Audiencias.add(Valores[1].replaceAll("\\,", "\\."));
-                
+
+                // JOptionPane.showMessageDialog(null,Valores);
+                if (Valores.length > 2) {
+
+                    Audiencias.add(Valores[this.PosicaoEmissoraInstar - 1].replaceAll("\\,", "\\."));
+
                 }
-                               
-                 
-                
-                
-               
-              
+
             }
 
             linha = bf.readLine();
@@ -122,7 +151,7 @@ public class BelemDao {
 
         List<String> Audiencias = new LinkedList();
 
-        BufferedReader bf = new BufferedReader(new FileReader(new File("c:/teste/00012530.110")));
+        BufferedReader bf = new BufferedReader(new FileReader(this.ArquivoPontoPraca));
 
         String linha = bf.readLine();
 
@@ -139,8 +168,8 @@ public class BelemDao {
                 df.setRoundingMode(RoundingMode.HALF_EVEN);
 
                 String[] valores = SeparadorAudiencia(linha.replaceAll("\\*", "")).split(" ");
-                     
-                String ValorRba = df.format(Double.parseDouble(valores[2]) / 10);
+
+                String ValorRba = df.format(Double.parseDouble(RetornoPontoPracaMenos2(valores)[this.PosicaoEmissoraPontoPraca - 1]) / 10);
 
                 Audiencias.add(ValorRba.replaceAll("\\,", "\\."));
 
@@ -157,21 +186,21 @@ public class BelemDao {
     public List<Praca> obterObjetosAudiencia() throws Exception {
 
         List<Praca> PracasAudiencias = new ArrayList();
-        
-        List<String>PontoPracas = obterAudienciaPontoPraca();
-        List<String>Intares = obterAudienciaInstar();
+
+        List<String> PontoPracas = obterAudienciaPontoPraca();
+        List<String> Intares = obterAudienciaInstar();
 
         for (int i = 0; i <= 1439; i++) {
 
             String PeriodoConvertido = (String) hora.horarioMetd(this.HORAINICIO).get(i);
-DecimalFormat df = new DecimalFormat("#.##");
-  
-                 System.out.println(df.format(Float.parseFloat(Intares.get(i))-Float.parseFloat(PontoPracas.get(i))));
-           //    Intares.get(i)+" "+PontoPracas.get(i)+" "
-            
-            
-//          PracasAudiencias.add(new Praca(LocalDate.parse("2022-05-22"), 1, PeriodoConvertido, Float.parseFloat(Intares.get(i)), Float.parseFloat(PontoPracas.get(i)), 0.0f));
 
+            DecimalFormat df = new DecimalFormat("#.##");
+
+            float Diferenca =  Float.parseFloat(Intares.get(i)) - Float.parseFloat(PontoPracas.get(i));
+            
+            //    Intares.get(i)+" "+PontoPracas.get(i)+" "
+
+         PracasAudiencias.add(new Praca(this.Data, this.Praca,this.Emissora, PeriodoConvertido, Float.parseFloat(Intares.get(i)), Float.parseFloat(PontoPracas.get(i)),Diferenca));
         }
 
         return PracasAudiencias;
@@ -180,11 +209,19 @@ DecimalFormat df = new DecimalFormat("#.##");
 
     public static void main(String[] args) throws Exception {
 
-//        new BelemDao().obterAudienciaInstar();
-//        new BelemDao().obterAudienciaPontoPraca();
-        System.out.println(new BelemDao().obterObjetosAudiencia());
+//        new PracaDao().obterAudienciaInstar();
+//        new PracaDao().obterAudienciaPontoPraca();
+        List<Praca>s =new PracaDao(LocalDate.parse("2022-05-15"),1, 1, new File("CF\\Source\\103\\00012530.106"), new File("C:CF\\Source\\103\\GOI (30052022).txt"),103,1).obterObjetosAudiencia();
 
-//        Map<String, String> j = new BelemDao().obterAudienciaPontoPraca();
+        for(Praca x:s){
+        
+            System.out.println(x);
+        
+        
+        }
+        
+        
+//        Map<String, String> j = new PracaDao().obterAudienciaPontoPraca();
 //
 //        for (Object x : j.keySet()) {
 //
