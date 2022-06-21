@@ -8,7 +8,7 @@
 
 
 
-import br.com.kantar.dao.pracas.hora;
+import br.com.kantar.util.TimeUtil;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -81,7 +81,7 @@ String[]valores = str.toString().split(" ");
 
 
 
-hora.add(new hora().horarioMetd(intime).get(contador));
+hora.add(new TimeUtil().horarioMetd(intime).get(contador));
 pontos.add(dfs.format(Double.parseDouble(valores[9])/10000));
 
 
@@ -95,7 +95,7 @@ contador++;
 }  
       
 
-//chamarComparar(hora,pontos,"teste");
+//chamarComparar(TimeUtil,pontos,"teste");
 
 
 

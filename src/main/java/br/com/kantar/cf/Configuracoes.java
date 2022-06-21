@@ -18,13 +18,14 @@ import javax.swing.JOptionPane;
  * @author Eduardo.Fernando
  */
 public class Configuracoes {
-    
-
-    
+       public static final String SOURCEFOLDERS="c:/teste/";
+//    
+//    public static final String SOURCEFOLDERS="\\\\brmdap217sp\\environment\\temp\\EntregasOficiaisConfiguracao\\RT_X_OV\\";
+//    
     
     public String obterConfiguracao(String Chave) throws FileNotFoundException, IOException{
     
-    BufferedReader Leitor = new BufferedReader(new FileReader(new File("CF/Cf.csv")));
+    BufferedReader Leitor = new BufferedReader(new FileReader(new File(SOURCEFOLDERS+"\\CF\\Configuracao\\Cf.csv")));
     String Linha =Leitor.readLine();
     Map Configuracoes = new LinkedHashMap();
     
@@ -48,14 +49,6 @@ public class Configuracoes {
     
     }
     
-    
-    
-    public static void main(String[] args) throws IOException {
-        
-        System.out.println(new Configuracoes().obterConfiguracao("senha"));
-        
-        
-    }
     
     
 }

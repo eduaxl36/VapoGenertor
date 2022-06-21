@@ -4,6 +4,7 @@
  */
 package br.com.kantar.dao.pracas;
 
+import br.com.kantar.util.TimeUtil;
 import static br.com.kantar.dao.pracas.CampinasDao.hora;
 import java.io.BufferedReader;
 import java.io.File;
@@ -74,7 +75,7 @@ String[]valores = str.toString().split(" ");
 
 
 
-hora.add(new hora().horarioMetd(intime).get(contador));
+hora.add(new TimeUtil().horarioMetd(intime).get(contador));
 pontos.add(dfs.format(Double.parseDouble(valores[9])/10000));
 
 
@@ -88,7 +89,7 @@ contador++;
 }  
       
 
-//chamarComparar(hora,pontos,"teste");
+//chamarComparar(TimeUtil,pontos,"teste");
 
 
 
